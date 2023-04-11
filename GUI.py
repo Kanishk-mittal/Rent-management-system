@@ -24,10 +24,10 @@ def ask_log_in():
         namaste_file=ImageTk.PhotoImage(namaste_image)
         namaste_label=Label(log_in_window,image=namaste_file).pack(pady=20)
         #greeting and asking pin
-        greet_label=Label(log_in_window,text="Welcome to our Rent management system",font=('Arial black',15,'bold')).pack(pady=5)
-        greet_label2=Label(log_in_window,text="Please enter your password to continue").pack(pady=20)
-        password_box=Entry(log_in_window,textvariable=entered_password,font=('Arial black',15,'bold'),borderwidth=3,show="*").pack(pady=5)
-        Submit_button=Button(log_in_window,text="submit",font=('Arial black',15,'bold'),command=lambda: check_password(entered_password)).pack(pady=5)
+        Label(log_in_window,text="Welcome to our Rent management system",font=('Arial black',15,'bold')).pack(pady=5)
+        Label(log_in_window,text="Please enter your password to continue").pack(pady=20)
+        Entry(log_in_window,textvariable=entered_password,font=('Arial black',15,'bold'),borderwidth=3,show="*").pack(pady=5)
+        Button(log_in_window,text="submit",font=('Arial black',15,'bold'),command=lambda: check_password(entered_password)).pack(pady=5)
         log_in_window.mainloop()
         return verification
     except:
@@ -42,4 +42,6 @@ def check_password(entered_password):
         verification= False
         entered_password.set("")
         tmsg.showerror("wrong password","You have enterd wrong password")
-a=ask_log_in()
+
+
+
