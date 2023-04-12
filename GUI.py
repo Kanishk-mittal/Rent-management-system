@@ -52,6 +52,7 @@ def get_value():
     for i in range(len(temp)):
         temp[i]=temp[i].get()
     return temp
+
 def create_data_copy():
     global Details_list1
     global temp
@@ -59,7 +60,6 @@ def create_data_copy():
     #print(Details_list1)
     temp=list(Details_list1)
     tenant_details.destroy()
-    
 
 def ask_tenant_details():
     #Name,address,room_alloted,last_balance,extra_charge,extra_charge_comment,rent_paid_till,left_room_on,agreement_ID
@@ -85,5 +85,6 @@ def ask_tenant_details():
         Entry(tenant_details,textvariable=Details_list2[i],font=('Arial black',15,)).grid(row=i+2,column=2)
     Button(tenant_details,text="Submit",font=('Arial black',15,),command=create_data_copy).grid(row=11,column=2)
     tenant_details.mainloop()
+
 ask_tenant_details()
 print(get_value())
