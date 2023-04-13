@@ -7,4 +7,5 @@ sq.initialise()
 #requesting password and checking it 
 if g.ask_log_in():
     #here the user is authorised and we can perform our tasks
-    pass
+    room_data=sq.get_room_data()
+    choise=g.showrooms(room_data[["Room_name","currently_occupied","occupied_by"]])
