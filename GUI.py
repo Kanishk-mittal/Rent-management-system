@@ -89,20 +89,11 @@ def ask_tenant_details():
 #ask_tenant_details()
 #print(get_value())
 ##creating main window to show all avilabe rooms 
-def show_rooms():
-    rooms=Tk()
-    rooms.geometry('1920x1080')
-    Frame1=Frame(rooms)
-    Frame1.pack(pady=10)
-    Frame2=Frame(rooms)
-    Frame2.pack(pady=10)
-    Frame3=Frame(rooms)
-    Frame3.pack(pady=10)
-    Label(Frame1,text="Welcome to Rent management system",bg="black",fg='white',font=('Cascadia Mono SemiBold',25,'italic')).pack(pady=10,padx=20)
-    Button(Frame2,text="First Floor",font=('times new roman',20,'italic')).pack(pady=10,side=LEFT,padx=20)
-    Button(Frame2,text="Second Floor Room I",font=('times new roman',20,'italic')).pack(pady=10,side=LEFT,padx=20)
-    Button(Frame2,text="Second Floor Room II",font=('times new roman',20,'italic')).pack(pady=10,side=LEFT,padx=20)
-    Button(Frame3,text="Shop I",font=('times new roman',20,'italic')).pack(pady=10,side=LEFT,padx=20)
-    Button(Frame3,text="Shop II",font=('times new roman',20,'italic')).pack(pady=10,side=LEFT,padx=20)
-    rooms.mainloop()
-show_rooms()
+def showrooms(room_detail_dataframe):
+    main_window=Tk()
+    main_window.title("Rent management system")
+    main_window.geometry("1920x1080")
+    Label(main_window,text="Room \t\t\t currently occupied \t\t\t occupied by",font=("Segor print",25,"italic"),bg="cyan",fg="Black").pack(fill=X)
+    for i in range(1,len(room_detail_dataframe)+1):
+        Button(main_window,text=f"{room_detail_dataframe.loc[i,'Room_name']}\t\t\t\t{room_detail_dataframe.loc[i,'currently_occupied']}\t\t\t\t{room_detail_dataframe.loc[i,'occupied_by']}",font=("Segor print",15,"italic"),justify=LEFT,command=lambda value=i:print(value),pady=20,borderwidth=5).pack(fill=X,pady=15,padx=10)
+    main_window.mainloop()
