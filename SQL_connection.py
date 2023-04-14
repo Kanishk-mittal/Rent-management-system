@@ -1,12 +1,18 @@
 import mysql.connector as msc
 import pandas as pd
-con=msc.connect(host="localhost",user="root",password="1234")
-cur=con.cursor()
+
+
+def start_connection():
+    global con,cur
+    con=msc.connect(host="localhost",user="root",password="1234")
+    cur=con.cursor()
 
 def add_room(room_name,rent,currently_occupied,internet_provided,last_electricity_unit,agreement_ID,agreement_Date,occupied_by):
+    global cur
     cur.execute(f"insert into Room_Details(Room_name,rent,currently_occupied,internet_provided,last_electricity_unit,agreement_ID,agreement_Date,occupied_by) values('{room_name}',{rent},'{currently_occupied}','{internet_provided}',{last_electricity_unit},'{agreement_ID}','{agreement_Date}',{occupied_by})")
 
 def initialise():
+    global cur
     try:
         cur.execute("Use Rent_details;")
     except:
@@ -24,13 +30,14 @@ def initialise():
         add_room("second floor room 2",3000,"NO","NO",1234,"alkdufdhlnadij","2023-03-01","NULL")
         add_room("Shop no 5",5500,"YES","NO",1234,"alkdufdhlnadij","2023-03-01","NULL")
         add_room("Shop no 6",5500,"YES","NO",1234,"alkdufdhlnadij","2023-03-01","NULL")
-initialise()
 def add_tenant(Name,address,room_alloted,last_balance,extra_charge,extra_charge_comment,rent_paid_till,left_room_on,agreement_ID):
+    global cur
     cur.execute(f"insert into Tenant_Details(Name,address,room_alloted,last_balance,extra_charge,extra_charge_comment,rent_paid_till,left_room_on,agreement_ID) values('{Name}','{address}','{room_alloted}',{last_balance},{extra_charge},'{extra_charge_comment}',{rent_paid_till},'{left_room_on}','{agreement_ID}')")
 def get_room_data():
+    global con
     # Read the table into a Pandas DataFrame
     df = pd.read_sql_query("SELECT * FROM  room_details", con,index_col="room_ID")
     return df
-    
-con.commit()
-con.close()
+def close_connection():
+    con.commit()
+    con.close()
