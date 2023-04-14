@@ -86,14 +86,42 @@ def ask_tenant_details():
     Button(tenant_details,text="Submit",font=('Arial black',15,),command=create_data_copy).grid(row=11,column=2)
     tenant_details.mainloop()
 
-#ask_tenant_details()
-#print(get_value())
-##creating main window to show all avilabe rooms 
+def create_copy(value):
+    global main_window
+    global copy
+    copy=value
+    main_window.destroy()
+    
+def get_function_value():
+    global copy
+    return copy
+
 def showrooms(room_detail_dataframe):
+    global main_window
     main_window=Tk()
     main_window.title("Rent management system")
     main_window.geometry("1920x1080")
     Label(main_window,text="Room \t\t\t currently occupied \t\t\t occupied by",font=("Segor print",25,"italic"),bg="cyan",fg="Black").pack(fill=X)
     for i in range(1,len(room_detail_dataframe)+1):
-        Button(main_window,text=f"{room_detail_dataframe.loc[i,'Room_name']}\t\t\t\t{room_detail_dataframe.loc[i,'currently_occupied']}\t\t\t\t{room_detail_dataframe.loc[i,'occupied_by']}",font=("Segor print",15,"italic"),justify=LEFT,command=lambda value=i:print(value),pady=20,borderwidth=5).pack(fill=X,pady=15,padx=10)
+        Button(main_window,text=f"{room_detail_dataframe.loc[i,'Room_name']}\t\t\t\t{room_detail_dataframe.loc[i,'currently_occupied']}\t\t\t\t{room_detail_dataframe.loc[i,'occupied_by']}",font=("Segor print",15,"italic"),justify=LEFT,command=lambda value=i:create_copy(value),pady=20,borderwidth=5).pack(fill=X,pady=15,padx=10)
     main_window.mainloop()
+
+def show_room_details(name,last_balance,rent_paid_till):
+    room_detail=Tk()
+    room_detail.geometry("1920x1018")
+    namevar=StringVar(room_detail)
+    balancevar=StringVar(room_detail)
+    rentvar=StringVar(room_detail)
+    namevar.set(name)
+    balancevar.set(last_balance)
+    rentvar.set(rent_paid_till)
+    Left_frame=Frame(room_detail,bg='cyan',padx=15,pady=10,bd=3,relief="solid")
+    Left_frame.pack(fill=Y,expand=True,anchor=W)
+    Label(Left_frame,text="Tenanat details",font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(side=TOP,padx=5,pady=15)
+    Label(Left_frame,text="Name",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+    Label(Left_frame,textvariable=namevar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+    Label(Left_frame,text="Last Balance",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+    Label(Left_frame,textvariable=balancevar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+    Label(Left_frame,text="Rent Paid Till",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+    Label(Left_frame,textvariable=rentvar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+    room_detail.mainloop()
