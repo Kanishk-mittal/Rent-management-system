@@ -109,19 +109,32 @@ def showrooms(room_detail_dataframe):
 def show_room_details(name,last_balance,rent_paid_till):
     room_detail=Tk()
     room_detail.geometry("1920x1018")
+
     namevar=StringVar(room_detail)
     balancevar=StringVar(room_detail)
     rentvar=StringVar(room_detail)
+
     namevar.set(name)
     balancevar.set(last_balance)
     rentvar.set(rent_paid_till)
-    Left_frame=Frame(room_detail,bg='cyan',padx=15,pady=10,bd=3,relief="solid")
-    Left_frame.pack(fill=Y,expand=True,anchor=W)
+
+    Left_frame=Frame(room_detail,bg='cyan',padx=15,pady=20,bd=3,relief="solid")
+    Left_frame.pack(side=LEFT, fill=Y, expand=True,anchor=W)
+
     Label(Left_frame,text="Tenanat details",font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(side=TOP,padx=5,pady=15)
+
     Label(Left_frame,text="Name",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
     Label(Left_frame,textvariable=namevar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+
     Label(Left_frame,text="Last Balance",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
     Label(Left_frame,textvariable=balancevar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+
     Label(Left_frame,text="Rent Paid Till",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
     Label(Left_frame,textvariable=rentvar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
+
+    Button(room_detail,text="Generate Bill",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Generate_Bill")).pack(pady=20,padx=250)
+    Button(room_detail,text="Generate Recipt",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Generate_recipt")).pack(pady=20,padx=250)
+    Button(room_detail,text="Replace tenant",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Replac_tenant")).pack(pady=20,padx=250)
+    Button(room_detail,text="Edit property details",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Edit_property_Details")).pack(pady=20,padx=250)
+    Button(room_detail,text="Mark as Empyt",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Mark_as_empty")).pack(pady=20,padx=250)
     room_detail.mainloop()
