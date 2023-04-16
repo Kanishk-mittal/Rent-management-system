@@ -9,13 +9,17 @@ def start_connection():
 
 def add_room(room_name,rent,currently_occupied,internet_provided,last_electricity_unit,agreement_ID,agreement_Date,occupied_by):
     global cur
+    global con
+    print("room added")
     cur.execute(f"insert into Room_Details(Room_name,rent,currently_occupied,internet_provided,last_electricity_unit,agreement_ID,agreement_Date,occupied_by) values('{room_name}',{rent},'{currently_occupied}','{internet_provided}',{last_electricity_unit},'{agreement_ID}','{agreement_Date}',{occupied_by})")
+    con.commit()
 
 def initialise():
     global cur
     try:
         cur.execute("Use Rent_details;")
     except:
+        print("intialising database")
         cur.execute("Create Database Rent_details;")
         cur.execute("Use Rent_details;")
 

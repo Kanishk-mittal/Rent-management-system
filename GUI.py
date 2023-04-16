@@ -65,29 +65,25 @@ def ask_tenant_details():
     tenant_details=Tk()
     Name=StringVar(tenant_details)
     address=StringVar(tenant_details)
-    room_alloted=StringVar(tenant_details)
-    last_balance=StringVar(tenant_details)
-    extra_charge=StringVar(tenant_details)
-    extra_charge_comment=StringVar(tenant_details)
-    rent_paid_till=StringVar(tenant_details)
-    left_room_on=StringVar(tenant_details)
-    left_room_on.set("NULL")
+    
+    balance=StringVar(tenant_details)
     agreement_ID=StringVar(tenant_details)
-    Details_list1=[Name,address,room_alloted,last_balance,extra_charge,extra_charge_comment,rent_paid_till,left_room_on,agreement_ID]
-    Details_list2=[Name,address,room_alloted,last_balance,extra_charge,extra_charge_comment,rent_paid_till,agreement_ID]
-    details=['Name','Address','Room alloted','Last balance','Extra charge','Extra charge comment','Rent paid till','Agreement ID']
+    Details_list1=[Name,address,balance,agreement_ID]
+    details=['Name','Address','balance','Agreement ID']
     Label(tenant_details,text="Enter details ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=1,column=1)
     for i in range(len(details)):
         Label(tenant_details,text=details[i],font=('Arial black',15,)).grid(row=i+2,column=1,pady=10)
-        Entry(tenant_details,textvariable=Details_list2[i],font=('Arial black',15,)).grid(row=i+2,column=2)
+        Entry(tenant_details,textvariable=Details_list1[i],font=('Arial black',15,)).grid(row=i+2,column=2)
     Button(tenant_details,text="Submit",font=('Arial black',15,),command=create_data_copy).grid(row=11,column=2)
     tenant_details.mainloop()
 
-def create_copy(value):
+def create_copy(value,window):
     global main_window
+    global room_detail
     global copy
     copy=value
-    main_window.destroy()
+    #print(str(window))
+    window.destroy()
     
 def get_function_value():
     global copy
@@ -100,10 +96,11 @@ def showrooms(room_detail_dataframe):
     main_window.geometry("1920x1080")
     Label(main_window,text="Room \t\t\t currently occupied \t\t\t occupied by",font=("Segor print",25,"italic"),bg="cyan",fg="Black").pack(fill=X)
     for i in range(1,len(room_detail_dataframe)+1):
-        Button(main_window,text=f"{room_detail_dataframe.loc[i,'Room_name']}\t\t\t\t{room_detail_dataframe.loc[i,'currently_occupied']}\t\t\t\t{room_detail_dataframe.loc[i,'occupied_by']}",font=("Segor print",15,"italic"),justify=LEFT,command=lambda value=i:create_copy(value),pady=20,borderwidth=5).pack(fill=X,pady=15,padx=10)
+        Button(main_window,text=f"{room_detail_dataframe.loc[i,'Room_name']}\t\t\t\t{room_detail_dataframe.loc[i,'currently_occupied']}\t\t\t\t{room_detail_dataframe.loc[i,'occupied_by']}",font=("Segor print",15,"italic"),justify=LEFT,command=lambda value=i:create_copy(value,main_window),pady=20,borderwidth=5).pack(fill=X,pady=15,padx=10)
     main_window.mainloop()
 
 def show_room_details(name,last_balance,rent_paid_till):
+    global room_detail
     room_detail=Tk()
     room_detail.geometry("1920x1018")
 
@@ -129,9 +126,28 @@ def show_room_details(name,last_balance,rent_paid_till):
     Label(Left_frame,text="Rent Paid Till",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
     Label(Left_frame,textvariable=rentvar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
 
-    Button(room_detail,text="Generate Bill",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Generate_Bill")).pack(pady=20,padx=250)
-    Button(room_detail,text="Generate Recipt",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Generate_recipt")).pack(pady=20,padx=250)
-    Button(room_detail,text="Replace tenant",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Replac_tenant")).pack(pady=20,padx=250)
-    Button(room_detail,text="Edit property details",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Edit_property_Details")).pack(pady=20,padx=250)
-    Button(room_detail,text="Mark as Empyt",font=("cosmic sans MS",25,"bold"),borderwidth=10,command=lambda:create_copy("Mark_as_empty")).pack(pady=20,padx=250)
+    Button(room_detail,text="Generate Bill",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_Bill",room_detail)).pack(pady=15,padx=250)
+    Button(room_detail,text="Generate Recipt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_recipt",room_detail)).pack(pady=15,padx=250)
+    Button(room_detail,text="Replace tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Replace_tenant",room_detail)).pack(pady=15,padx=250)
+    Button(room_detail,text="Add new tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Add_tenant",room_detail)).pack(pady=15,padx=250)
+    Button(room_detail,text="Edit property details",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Edit_property_Details",room_detail)).pack(pady=15,padx=250)
+    Button(room_detail,text="Mark as Empyt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Mark_as_empty",room_detail)).pack(pady=15,padx=250)
     room_detail.mainloop()
+
+def ask_room_details():
+    #rent,internetprovided , last electricity units 
+    global Details_list1
+    global room_update
+    room_update=Tk()
+    rent=StringVar(room_update)
+    internet_provided=StringVar(room_update)
+    last_electricity_unit=StringVar(room_update)
+    agreement_ID=StringVar(room_update)
+    Details_list1=[Name,address,balance,agreement_ID]
+    details=['Name','Address','balance','Agreement ID']
+    Label(room_update,text="Enter details ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=1,column=1)
+    for i in range(len(details)):
+        Label(room_update,text=details[i],font=('Arial black',15,)).grid(row=i+2,column=1,pady=10)
+        Entry(room_update,textvariable=Details_list1[i],font=('Arial black',15,)).grid(row=i+2,column=2)
+    Button(room_update,text="Submit",font=('Arial black',15,),command=create_data_copy).grid(row=11,column=2)
+    room_update.mainloop()
