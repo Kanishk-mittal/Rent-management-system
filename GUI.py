@@ -142,8 +142,7 @@ def ask_room_details():
     rent=StringVar(room_update)
     internet_provided=StringVar(room_update)
     last_electricity_unit=StringVar(room_update)
-    agreement_ID=StringVar(room_update)
-    Details_list1=[Name,address,balance,agreement_ID]
+    Details_list1=[rent,internet_provided,last_electricity_unit]
     details=['Name','Address','balance','Agreement ID']
     Label(room_update,text="Enter details ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=1,column=1)
     for i in range(len(details)):
