@@ -54,12 +54,34 @@ def close_connection():
 def get_tenant_details(name):
     df = pd.read_sql_query(f"SELECT * FROM  tenant_details where name='{name}'", con,index_col="Tenant_ID")
     return df
+
 def change_rent_paid_till(date,roomID):
     global con 
     global cur
     cur.execute(f"update tenant_details set rent_paid_till = '{date}' where room_alloted={roomID}")
     con.commit()
+
 def set_current_active(roomID,name):
     global cur
     cur.execute(f"update room_details set occupied_by = '{name}' where room_ID = {roomID}")
+    con.commit()
+
+def update_room_detail(list):
+    global cur
+    global con
+    cur.execute(f"update room_details set rent={list[0]},internet_provided={list[1]}")
+    con.commit()
+
+def add_payment(room_ID,name,date,current_units,balance):
+    global cur
+    global con 
+    cur.execute(f"update room_details set last_electricity_unit={current_units} where room_ID = {room_ID}")
+    cur.execute(f"update tenant_details set rent_paid_till='{date}',last_balance={balance} where Name = {name}")
+    con.commit()
+
+def set_empty(room,tenant,date):
+    global cur
+    global con
+    cur.execute(f"update room_details set currently_occupied ='NO',occupied_by=NULL where room_ID={room}")
+    cur.execute(f"update tennant_details set room_alloted=NULL , left_room_on = {date} where name = {tenant}")
     con.commit()

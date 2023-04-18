@@ -128,7 +128,7 @@ def show_room_details(name,last_balance,rent_paid_till):
 
     Button(room_detail,text="Generate Bill",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_Bill",room_detail)).pack(pady=10,padx=250)
     Button(room_detail,text="Generate Recipt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_recipt",room_detail)).pack(pady=10,padx=250)
-    Button(room_detail,text="Replace tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Replace_tenant",room_detail)).pack(pady=10,padx=250)
+    #Button(room_detail,text="Replace tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Replace_tenant",room_detail)).pack(pady=10,padx=250)
     Button(room_detail,text="Add new tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Add_tenant",room_detail)).pack(pady=10,padx=250)
     Button(room_detail,text="Edit property details",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Edit_property_Details",room_detail)).pack(pady=10,padx=250)
     Button(room_detail,text="Mark as Empyt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Mark_as_empty",room_detail)).pack(pady=10,padx=250)
@@ -142,12 +142,33 @@ def ask_room_details():
     room_update=Tk()
     rent=StringVar(room_update)
     internet_provided=StringVar(room_update)
-    last_electricity_unit=StringVar(room_update)
-    Details_list1=[rent,internet_provided,last_electricity_unit]
-    details=['Name','Address','balance','Agreement ID']
+    Details_list1=[rent,internet_provided]
+    details=['Rent','Internet Provided']
     Label(room_update,text="Enter details ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=1,column=1)
     for i in range(len(details)):
         Label(room_update,text=details[i],font=('Arial black',15,)).grid(row=i+2,column=1,pady=10)
         Entry(room_update,textvariable=Details_list1[i],font=('Arial black',15,)).grid(row=i+2,column=2)
     Button(room_update,text="Submit",font=('Arial black',15,),command=create_data_copy).grid(row=11,column=2)
     room_update.mainloop()
+
+def ask_current_unit():
+    unit_window=Tk()
+    units=DoubleVar()
+    Label(unit_window,text="Enter current electricity units ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=1,column=1)
+    Entry(unit_window,textvariable=units,font=('Arial black',15,'bold'),bg="white",fg="black").grid(row=1,column=2)
+    Button(unit_window,text="Submit",font=('Arial black',15,),command=lambda:create_copy(units.get(),unit_window)).grid(row=11,column=2)
+    unit_window.mainloop()
+
+def ask_current_unit_amount():
+    unit_window=Tk()
+    units=DoubleVar()
+    amount=IntVar()
+    lst=[units,amount]
+    Label(unit_window,text="Enter current electricity units ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=1,column=1)
+    Entry(unit_window,textvariable=units,font=('Arial black',15,'bold'),bg="white",fg="black").grid(row=1,column=2)
+    Label(unit_window,text="Enter amount paid ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=2,column=1)
+    Entry(unit_window,textvariable=amount,font=('Arial black',15,'bold'),bg="white",fg="black").grid(row=2,column=2)
+    Button(unit_window,text="Submit",font=('Arial black',15,),command=lambda:create_copy(lst,unit_window)).grid(row=11,column=2)
+    unit_window.mainloop()
+
+

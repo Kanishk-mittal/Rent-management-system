@@ -36,9 +36,16 @@ if g.ask_log_in():
                 run=False
             if g.get_function_value()=="Generate_Bill":
                 tmsg.showerror("No tenant","there is currently no tenant in this room please add tenant first")
+            if g.get_function_value()=="Generate_recipt":
+                tmsg.showerror("No tenant","there is currently no tenant in this room please add tenant first")
+            if g.get_function_value()=="Mark_as_empty":
+                tmsg.showerror("No tenant","there is currently no tenant in this room please add tenant first")
+            if g.get_function_value()=="Edit_property_Details":
+                g.ask_room_details()
+                lst=g.get_value()
+                sq.update_room_detail(lst)
         else:
-            print(room_data.loc[g.get_function_value(),"occupied_by"])
-            tenant_data=sq.get_tenant_details(room_data.loc[g.get_function_value(),"occupied_by"])
+            tenant_data=sq.get_tenant_details(room_data.loc[room_ID,"currently_occupied"])
             g.show_room_details(str(tenant_data.iloc[0,0]),str(tenant_data.iloc[0,3]),str(tenant_data.iloc[0,4]))
             if g.get_function_value()=="Add_tenant":
                 g.ask_tenant_details()
@@ -57,5 +64,46 @@ if g.ask_log_in():
                 sq.set_current_active(room_ID,lst[0])
             if g.get_function_value()=="Quit":
                 run=False
-            
+            if g.get_function_value()=="Edit_property_Details":
+                g.ask_room_details()
+                lst=g.get_value()
+                sq.update_room_detail(lst)
+            if g.get_function_value()=="Generate_Bill":
+                if room_data.loc[room_ID,"internet_provided"]=="YES":
+                    internet_charges=266
+                else:
+                    internet_charges=0
+                date=datetime.date.today()
+                last_date=str(tenant_data.iloc[0,5])
+                paid_till=date_obj = datetime.strptime(last_date, '%Y-%m-%d')
+                room_data.loc[room_ID,"rent"]
+                rent=room_data.loc[room_ID,"rent"]*(date.month-paid_till.month)
+                g.ask_current_unit()
+                current_unit=g.get_function_value()
+                pdf.generate_Bill(room_data.loc[room_ID,"currently_occupied"],str(date),rent,internet_charges,room_data.loc[room_ID,"last_electricity_unit"],current_unit,tenant_data.iloc[0,4])
+            if g.get_function_value()=="Generate_recipt":
+                if room_data.loc[room_ID,"internet_provided"]=="YES":
+                    internet_charges=266
+                else:
+                    internet_charges=0
+                date=datetime.date.today()
+                last_date=str(tenant_data.iloc[0,5])
+                paid_till=date_obj = datetime.strptime(last_date, '%Y-%m-%d')
+                room_data.loc[room_ID,"rent"]
+                rent=room_data.loc[room_ID,"rent"]*(date.month-paid_till.month)
+                g.ask_current_unit_amount()
+                datalist=g.get_function_value()
+                current_unit=datalist[0].get()
+                amount_paid=datalist[1].get()
+                total =tenant_data.iloc[0,4]+ rent + internet_charges + (float(current_unit)-float(room_data.loc[room_ID,"last_electricity_unit"]))*7.5
+                balance=total-amount_paid
+                pdf.generate_invoice(room_data.loc[room_ID,"currently_occupied"],date,rent,internet_charges,room_data.loc[room_ID,"last_electricity_unit"],current_unit,amount_paid,balance,tenant_data.iloc[0,4])
+                sq.add_payment(room_ID,room_data.loc[room_ID,"currently_occupied"],str(date),current_unit,balance)
+            if g.get_function_value()=="Mark_as_empty":
+                date=datetime.date.today()
+                sq.set_empty(room_ID,room_data.loc[room_ID,"currently_occupied"],date)
+            if g.get_function_value()=="Edit_property_Details":
+                g.ask_room_details()
+                lst=g.get_value()
+                sq.update_room_detail(lst)
 sq.close_connection()
