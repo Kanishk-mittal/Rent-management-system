@@ -68,8 +68,8 @@ def ask_tenant_details():
     
     balance=StringVar(tenant_details)
     agreement_ID=StringVar(tenant_details)
-    Details_list1=[Name,address,balance,agreement_ID]
-    details=['Name','Address','balance','Agreement ID']
+    Details_list1=[Name,address,balance]
+    details=['Name','Address','balance']
     Label(tenant_details,text="Enter details ",font=('Arial black',15,'bold'),bg="black",fg="white").grid(row=1,column=1)
     for i in range(len(details)):
         Label(tenant_details,text=details[i],font=('Arial black',15,)).grid(row=i+2,column=1,pady=10)
