@@ -126,12 +126,13 @@ def show_room_details(name,last_balance,rent_paid_till):
     Label(Left_frame,text="Rent Paid Till",font=("cosmic sans MS",25,"bold"),bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
     Label(Left_frame,textvariable=rentvar,font=("cosmic sans MS",25,"bold"),bd=2, relief="solid",bg="cyan",fg="black").pack(padx=5,pady=15,anchor=W)
 
-    Button(room_detail,text="Generate Bill",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_Bill",room_detail)).pack(pady=15,padx=250)
-    Button(room_detail,text="Generate Recipt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_recipt",room_detail)).pack(pady=15,padx=250)
-    Button(room_detail,text="Replace tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Replace_tenant",room_detail)).pack(pady=15,padx=250)
-    Button(room_detail,text="Add new tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Add_tenant",room_detail)).pack(pady=15,padx=250)
-    Button(room_detail,text="Edit property details",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Edit_property_Details",room_detail)).pack(pady=15,padx=250)
-    Button(room_detail,text="Mark as Empyt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Mark_as_empty",room_detail)).pack(pady=15,padx=250)
+    Button(room_detail,text="Generate Bill",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_Bill",room_detail)).pack(pady=10,padx=250)
+    Button(room_detail,text="Generate Recipt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Generate_recipt",room_detail)).pack(pady=10,padx=250)
+    Button(room_detail,text="Replace tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Replace_tenant",room_detail)).pack(pady=10,padx=250)
+    Button(room_detail,text="Add new tenant",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Add_tenant",room_detail)).pack(pady=10,padx=250)
+    Button(room_detail,text="Edit property details",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Edit_property_Details",room_detail)).pack(pady=10,padx=250)
+    Button(room_detail,text="Mark as Empyt",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Mark_as_empty",room_detail)).pack(pady=10,padx=250)
+    Button(room_detail,text="QUIT",font=("cosmic sans MS",20,"bold"),borderwidth=10,command=lambda:create_copy("Quit",room_detail)).pack(pady=10,padx=250)
     room_detail.mainloop()
 
 def ask_room_details():
